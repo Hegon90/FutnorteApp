@@ -1,0 +1,38 @@
+﻿<Window x:Class="FutnorteApp.UI.TeamsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="TeamsWindow" Height="450" Width="800">
+    <!--<DockPanel>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            --><!-- DataGrid will be placed at the center of the Grid --><!--
+            <DataGrid ItemsSource="{Binding Teams}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Team Name" Binding="{Binding TeamName}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DockPanel>-->
+    <DockPanel LastChildFill="True">
+        <Border Height="25" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
+            <TextBlock Foreground="Red">Page Tittle</TextBlock>
+        </Border>
+        <Border Width="200" Background="PaleGreen" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Left">
+            <TextBlock Foreground="Black">Menu</TextBlock>
+        </Border>
+        <Border Height="25" Background="LemonChiffon" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom">
+            <TextBlock Foreground="Black">Page Bottom</TextBlock>
+        </Border>
+        <Border Background="White" BorderBrush="Black" BorderThickness="1">
+            <DataGrid ItemsSource="{Binding Teams}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Team Name" Binding="{Binding TeamName}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </DockPanel>
+</Window>
+
+

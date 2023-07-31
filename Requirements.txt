@@ -1,0 +1,24 @@
+Desktop Application
+
+*: A Windows desktop app is required, this app must display the Futnorte football tournament position table, after the
+   match results, it must let to export the match results and the positions table separatedly, must have the option to aggregate
+   teams, rounds, match results and matches.
+
+Software: 
+   WPF App, SQLite.
+
+Database Tables:
+   - Teams.
+   - Rounds.
+   - Matches.
+   - Results.
+   - Records.
+
+Database Requirements:
+   - Teams table: team-id, team-name.
+   - Rounds table: round-id, round-name, round-date.
+   - Places table: place-id, place-name.
+   - Matches table: match-id, round-id, home-team-id, away-team-id, match-date, place-id.
+   - Results table: result-id, round-id, home-team-id, away-team-id, home-score, away-score, result-date.
+   - Records table: record-id, team-id, matches-played, goals-for, goals-against, team-wins, team-draws, team-losses, team-points.
+   
