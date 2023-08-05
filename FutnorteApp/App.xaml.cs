@@ -18,8 +18,6 @@ namespace FutnorteApp
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            TeamsWindow teamsWindow = new TeamsWindow();
-            teamsWindow.Show();
         }
     }
 }

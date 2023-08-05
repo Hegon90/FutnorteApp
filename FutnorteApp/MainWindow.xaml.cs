@@ -16,11 +16,9 @@ namespace FutnorteApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly TeamViewModel _teamViewModel;
         public MainWindow()
         {
             InitializeComponent();
-
             //Code to show database content in messagebox
 
             //_teamViewModel = new TeamViewModel();
@@ -32,8 +30,6 @@ namespace FutnorteApp
             //}
             //MessageBox.Show(message, "Teams List", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-
-
     }
 }
 

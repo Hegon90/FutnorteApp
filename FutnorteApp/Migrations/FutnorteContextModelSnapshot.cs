@@ -3,7 +3,6 @@ using System;
 using FutnorteApp.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,11 +10,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutnorteApp.Migrations
 {
     [DbContext(typeof(FutnorteContext))]
-    [Migration("20230729180038_InitialCreate")]
-    partial class InitialCreate
+    partial class FutnorteContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.9");
@@ -160,6 +157,11 @@ namespace FutnorteApp.Migrations
                     b.Property<int>("TeamId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("TeamGroup")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("TeamName")
                         .IsRequired()

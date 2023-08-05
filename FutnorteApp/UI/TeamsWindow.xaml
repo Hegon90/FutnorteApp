@@ -4,35 +4,136 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="TeamsWindow" Height="450" Width="800">
-    <!--<DockPanel>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-            --><!-- DataGrid will be placed at the center of the Grid --><!--
-            <DataGrid ItemsSource="{Binding Teams}" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Team Name" Binding="{Binding TeamName}" />
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
-    </DockPanel>-->
-    <DockPanel LastChildFill="True">
-        <Border Height="25" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
-            <TextBlock Foreground="Red">Page Tittle</TextBlock>
+        Title="TeamsWindow" Height="720" Width="1080">
+    <Grid Background="Goldenrod">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="500" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="440" />
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Row 0, Column 0 -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Equipos" HorizontalAlignment="Center"
+                   FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center"/>
+        <!-- Group A -->
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Grupo A" HorizontalAlignment="Center"
+                   FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center"/>
+        <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding GroupAViewSource.View}" 
+                  SelectedItem="{Binding SelectedTeam}" AutoGenerateColumns="False" Width="190"
+                  HeadersVisibility="Column" BorderThickness="3">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Equipo" Binding="{Binding TeamName}" Width="190"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!-- Group B -->
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="Grupo B" HorizontalAlignment="Center"
+                   FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center"/>
+        <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding GroupBViewSource.View}" 
+                  SelectedItem="{Binding SelectedTeam}" AutoGenerateColumns="False" Width="190"
+                  HeadersVisibility="Column" BorderThickness="3">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Equipo" Binding="{Binding TeamName}" Width="190"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!-- Group N/A -->
+        <TextBlock Grid.Row="0" Grid.Column="3" Text="Sin Grupo" HorizontalAlignment="Center"
+                   FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Center"/>
+        <DataGrid Grid.Row="1" Grid.Column="3" ItemsSource="{Binding NoGroupViewSource.View}" 
+                  SelectedItem="{Binding SelectedTeam}" AutoGenerateColumns="False" Width="190"
+                  HeadersVisibility="Column" BorderThickness="3">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Equipo" Binding="{Binding TeamName}" Width="190"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!-- Create Modelue -->
+        <Border BorderThickness="2" BorderBrush="Gray" Grid.Row="1" Width="360" Height="140"
+                VerticalAlignment="Top" Background="MediumSeaGreen">
+            <Grid Grid.Row="1" Grid.Column="0" Width="300" Height="130" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock FontFamily="Arial Black" VerticalAlignment="Center">Registrar</TextBlock>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"
+                           Width="60" Height="3" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                <Label Grid.Row="1" Width="auto" Height="25" 
+               HorizontalAlignment="Left" VerticalAlignment="Top">Nombre Equipo
+                </Label>
+                <TextBox Name="txtTeamName" Grid.Row="1" Grid.Column="1" Height="20" 
+                 HorizontalAlignment="Stretch" VerticalAlignment="Top"></TextBox>
+                <Label Grid.Row="2" Width="70" Height="25"
+               HorizontalAlignment="left" VerticalAlignment="Top">Grupo
+                </Label>
+                <ComboBox Name="cboTeamGroup" Grid.Row="2" Grid.Column="1" Width="60" Height="20" 
+                  HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <ComboBoxItem></ComboBoxItem>
+                    <ComboBoxItem>A</ComboBoxItem>
+                    <ComboBoxItem>B</ComboBoxItem>
+                    <ComboBoxItem IsSelected="True">N/A</ComboBoxItem>
+                </ComboBox>
+                <Button Grid.Row="3" Grid.Column="1" Width="60" Height="20"
+                        VerticalAlignment="Center" HorizontalAlignment="Left" Click="RegisterButton_Click"
+                Background="DeepSkyBlue">Registrar
+                </Button>
+            </Grid>
         </Border>
-        <Border Width="200" Background="PaleGreen" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Left">
-            <TextBlock Foreground="Black">Menu</TextBlock>
+        <!--Edit Module-->
+        <Border BorderThickness="2" BorderBrush="Gray" Grid.Row="1" Width="360" Height="140"
+                VerticalAlignment="Top" Background="LightBlue" Margin="0,160,0,0">
+            <Grid Grid.Row="1" Grid.Column="0" Width="300" Height="130" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock FontFamily="Arial Black" VerticalAlignment="Center">Editar</TextBlock>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"
+                           Width="60" Height="3" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                <Label Grid.Row="1" Width="auto" Height="25" 
+                       HorizontalAlignment="Left" VerticalAlignment="Top">Nombre Equipo
+                </Label>
+                <Label Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       >Habilitar edicion</Label>
+                <CheckBox Name="chkEnableEdit" Grid.Column="1" HorizontalAlignment="Right" 
+                          VerticalAlignment="Center"></CheckBox>
+                <TextBox Name="txtEditTeamName" Grid.Row="1" Grid.Column="1" Height="20"
+                         HorizontalAlignment="Stretch" VerticalAlignment="Top" 
+                         Text="{Binding SelectedTeam.TeamName}" 
+                         IsEnabled="{Binding ElementName=chkEnableEdit, Path=IsChecked}">
+                </TextBox>
+                <Label Grid.Row="2" Width="70" Height="25"
+               HorizontalAlignment="left" VerticalAlignment="Top">Grupo
+                </Label>
+                <ComboBox Name="cboEditTeamGroup" Grid.Row="2" Grid.Column="1" Width="60" Height="20" 
+                          HorizontalAlignment="Left" VerticalAlignment="Top" 
+                          SelectedItem="{Binding SelectedTeam.TeamGroup}" 
+                          ItemsSource="{Binding GroupOptions}"
+                          IsEnabled="{Binding ElementName=chkEnableEdit, Path=IsChecked}">
+                </ComboBox>
+                <Button Grid.Row="3" Grid.Column="1" Width="60" Height="20"
+                        VerticalAlignment="Center" HorizontalAlignment="Left" Click="EditButton_Click"
+                Background="DeepSkyBlue">Guardar
+                </Button>
+            </Grid>
         </Border>
-        <Border Height="25" Background="LemonChiffon" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom">
-            <TextBlock Foreground="Black">Page Bottom</TextBlock>
-        </Border>
-        <Border Background="White" BorderBrush="Black" BorderThickness="1">
-            <DataGrid ItemsSource="{Binding Teams}" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Team Name" Binding="{Binding TeamName}" />
-                </DataGrid.Columns>
-            </DataGrid>
-        </Border>
-    </DockPanel>
+        <!--Information Module-->
+    </Grid>
 </Window>
-
-
