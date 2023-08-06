@@ -64,7 +64,10 @@ namespace FutnorteApp.Migrations
                     TeamId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     TeamName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    TeamGroup = table.Column<string>(type: "TEXT", maxLength: 3, nullable: false)
+                    TeamGroup = table.Column<string>(type: "TEXT", maxLength: 3, nullable: false),
+                    TeamColor = table.Column<string>(type: "TEXT", nullable: true),
+                    TeamManager = table.Column<string>(type: "TEXT", nullable: true),
+                    TeamPhoneNumber = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

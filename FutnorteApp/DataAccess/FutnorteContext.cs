@@ -1,7 +1,5 @@
 ﻿using FutnorteApp.Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System;
 using System.IO;
 
 namespace FutnorteApp.DataAccess

@@ -15,12 +15,13 @@ namespace FutnorteApp
     {
         private readonly TeamService _teamService;
 
-        public TeamViewModel()
+        public TeamViewModel(TeamService teamService)
         {
-            _teamService = new TeamService(new TeamRepository(new FutnorteContext()));
+            _teamService = teamService;
             _teams = new ObservableCollection<Team>();
             Teams = new ObservableCollection<Team>();
         }
+
 
         public async Task InitializeAsync()
         {
@@ -63,12 +64,15 @@ namespace FutnorteApp
         }
 
         // Create new team
-        public void CreateTeam(string teamName, string teamGroup)
+        public void CreateTeam(string teamName, string teamGroup, string teamColor, string teamManager, string teamPhoneNumber)
         {
             var newTeam = new Team
             {
                 TeamName = teamName,
-                TeamGroup = teamGroup
+                TeamGroup = teamGroup,
+                TeamColor = teamColor,
+                TeamManager = teamManager,
+                TeamPhoneNumber = teamPhoneNumber
             };
 
             _teamService.AddTeam(newTeam);
@@ -77,13 +81,16 @@ namespace FutnorteApp
         }
 
         // Update team
-        public void UpdateTeam(int teamId, string teamName, string teamGroup)
+        public void UpdateTeam(int teamId, string teamName, string teamGroup, string teamColor, string teamManager, string teamPhoneNumber)
         {
             var existingTeam = Teams.FirstOrDefault(t => t.TeamId == teamId);
             if (existingTeam != null)
             {
                 existingTeam.TeamName = teamName;
                 existingTeam.TeamGroup = teamGroup;
+                existingTeam.TeamColor = teamColor;
+                existingTeam.TeamManager = teamManager;
+                existingTeam.TeamPhoneNumber = teamPhoneNumber;
                 _teamService.UpdateTeam(existingTeam);
                 UpdateTeamGroups();
             }

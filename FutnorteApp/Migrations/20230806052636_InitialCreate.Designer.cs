@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutnorteApp.Migrations
 {
     [DbContext(typeof(FutnorteContext))]
-    [Migration("20230801142621_InitialCreate")]
+    [Migration("20230806052636_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -161,14 +161,23 @@ namespace FutnorteApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("TeamColor")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("TeamGroup")
                         .IsRequired()
                         .HasMaxLength(3)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("TeamManager")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("TeamName")
                         .IsRequired()
                         .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TeamPhoneNumber")
                         .HasColumnType("TEXT");
 
                     b.HasKey("TeamId");

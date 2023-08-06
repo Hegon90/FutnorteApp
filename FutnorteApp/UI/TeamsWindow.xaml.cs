@@ -1,6 +1,7 @@
-﻿using System;
+﻿using FutnorteApp.BusinessLogic;
+using FutnorteApp.DataAccess;
+using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace FutnorteApp.UI
 {
@@ -13,8 +14,9 @@ namespace FutnorteApp.UI
         public TeamsWindow()
         {
             InitializeComponent();
-            DataContext = new TeamViewModel();
-            _teamViewModel = new TeamViewModel();
+            var teamService = new TeamService(new TeamRepository(new FutnorteContext()));
+            DataContext = new TeamViewModel(teamService);
+            _teamViewModel = new TeamViewModel(teamService);
             DataContext = _teamViewModel;
         }
 
@@ -30,13 +32,16 @@ namespace FutnorteApp.UI
             {
                 string teamName = txtTeamName.Text;
                 string teamGroup = cboTeamGroup.Text;
+                string teamColor = txtTeamColor.Text;
+                string teamManager = txtTeamManager.Text;
+                string teamPhoneNumber = txtTeamPhoneNumber.Text;
                 if (string.IsNullOrEmpty(teamName) )
                 {
                     MessageBox.Show("Fallo en el registro.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
-                    _teamViewModel.CreateTeam(teamName, teamGroup);
+                    _teamViewModel.CreateTeam(teamName, teamGroup, teamColor, teamManager, teamPhoneNumber);
                     MessageBox.Show("Registro Exitoso!", "Registrar", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
@@ -55,8 +60,11 @@ namespace FutnorteApp.UI
                     int teamId = _teamViewModel.SelectedTeam.TeamId;
                     string teamName = txtEditTeamName.Text;
                     string teamGroup = cboEditTeamGroup.Text;
+                    string teamColor = txtEditTeamColor.Text;
+                    string teamManager = txtEditTeamManager.Text;
+                    string teamPhoneNumber = txtEditTeamPhoneNumber.Text; 
 
-                    _teamViewModel.UpdateTeam(teamId, teamName, teamGroup);
+                    _teamViewModel.UpdateTeam(teamId, teamName, teamGroup, teamColor, teamManager, teamPhoneNumber);
                     MessageBox.Show("Equipo Editado!", "Editar", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
