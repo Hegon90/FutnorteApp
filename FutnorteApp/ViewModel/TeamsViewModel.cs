@@ -112,14 +112,6 @@ namespace FutnorteApp
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        // Update CollectionViewSources
-        public void UpdateTeamGroups()
-        {
-            GroupAViewSource.View.Refresh();
-            GroupBViewSource.View.Refresh();
-            NoGroupViewSource.View.Refresh();
-        }
-
         // Get the values of the selected row in datagrids
         private Team? _selectedTeam;
         public Team? SelectedTeam
@@ -132,6 +124,14 @@ namespace FutnorteApp
             }
         }
         public ObservableCollection<string> GroupOptions { get; } = new ObservableCollection<string> {"A", "B", "N/A" };
+
+        // Update CollectionViewSources
+        public void UpdateTeamGroups()
+        {
+            GroupAViewSource.View.Refresh();
+            GroupBViewSource.View.Refresh();
+            NoGroupViewSource.View.Refresh();
+        }
     }
 }
 

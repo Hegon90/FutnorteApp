@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="TeamsWindow" Height="720" Width="1080">
-    <Grid Background="Goldenrod">
+    <Grid Background="#ECECEC">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="500" />
@@ -64,7 +64,7 @@
         
         <!-- Create Modelue -->
         <Border BorderThickness="1" BorderBrush="Gray" Grid.Row="1" Width="360" Height="230"
-                VerticalAlignment="Top" Background="MediumSeaGreen">
+                VerticalAlignment="Top" Background="#D8E1DC">
             <Grid Grid.Row="1" Grid.Column="0" Width="300" Height="220" VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
@@ -124,7 +124,7 @@
         </Border>
         <!--Edit Module-->
         <Border BorderThickness="1" BorderBrush="Gray" Grid.Row="1" Width="360" Height="230"
-                VerticalAlignment="Bottom" Background="LightBlue">
+                VerticalAlignment="Bottom" Background="#D8E1DC">
             <Grid Grid.Row="1" Grid.Column="0" Width="300" Height="220" VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>

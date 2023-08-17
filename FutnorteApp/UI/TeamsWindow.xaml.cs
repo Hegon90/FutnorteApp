@@ -18,6 +18,7 @@ namespace FutnorteApp.UI
             DataContext = new TeamViewModel(teamService);
             _teamViewModel = new TeamViewModel(teamService);
             DataContext = _teamViewModel;
+            _teamViewModel.SelectedTeam = null;
         }
 
         protected override async void OnContentRendered(EventArgs e)
@@ -26,6 +27,7 @@ namespace FutnorteApp.UI
             await _teamViewModel.InitializeAsync();
         }
 
+        // Create team
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -43,6 +45,7 @@ namespace FutnorteApp.UI
                 {
                     _teamViewModel.CreateTeam(teamName, teamGroup, teamColor, teamManager, teamPhoneNumber);
                     MessageBox.Show("Registro Exitoso!", "Registrar", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ClearFields();
                 }
             }
             catch (Exception ex)
@@ -51,6 +54,7 @@ namespace FutnorteApp.UI
             }
         }
 
+        // Edit team
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -78,5 +82,24 @@ namespace FutnorteApp.UI
             }
         }
 
+        // Clear fields
+        public void ClearFields()
+        {
+            txtTeamName.Text = string.Empty;
+            txtTeamColor.Text = string.Empty;
+            txtTeamManager.Text = string.Empty;
+            txtTeamPhoneNumber.Text = string.Empty;
+            cboTeamGroup.Text = "N/A";
+        }
+
+        // Clear edit fields
+        public void ClearEditFields()
+        {
+            txtEditTeamName.Text = string.Empty;
+            txtEditTeamColor.Text = string.Empty;
+            txtEditTeamManager.Text = string.Empty;
+            txtEditTeamPhoneNumber.Text = string.Empty;
+            cboEditTeamGroup.Text = "N/A";
+        }
     }
 }

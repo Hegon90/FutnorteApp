@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,27 +9,27 @@ namespace FutnorteApp.Domain
         // Properties.
         [Key]
         public int MatchId { get; set; } = 0;
-        public DateOnly MatchDate { get; set; }
+        public DateOnly? MatchDate { get; set; }
 
         // Foreign keys.
-        public int RoundId { get; set; }
+        public int? RoundId { get; set; }
         [Required]
         public int HomeTeamId { get; set; } = 0;
         [Required]
         public int AwayTeamId { get; set; } = 0;
-        public int PlaceId { get; set; }
+        public int? PlaceId { get; set; }
 
         // Navigation properties (Foreign keys as objects).
-        [ForeignKey("RoundId")]
+        [ForeignKey("Ronda")]
         public Round? Round { get; set; }
 
-        [ForeignKey("HomeTeamId")]
+        [ForeignKey("Local")]
         public Team? HomeTeam { get; set; }
 
-        [ForeignKey("AwayTeamId")]
+        [ForeignKey("Visitante")]
         public Team? AwayTeam { get; set; } 
 
-        [ForeignKey("PlaceId")]
+        [ForeignKey("Cancha")]
         public Place? Place { get; set; }
 
         // Entity Framework parameterless constructor.
@@ -39,7 +38,7 @@ namespace FutnorteApp.Domain
         }
 
         // Constructor to initialize the properties.
-        public Match(int matchId, DateOnly matchDate, int roundId, int homeTeamId, int awayTeamId, int placeId)
+        public Match(int matchId, DateOnly? matchDate, int? roundId, int homeTeamId, int awayTeamId, int? placeId)
         {
             MatchId = matchId;
             MatchDate = matchDate;

@@ -49,8 +49,7 @@ namespace FutnorteApp.Migrations
                 {
                     RoundId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    RoundName = table.Column<string>(type: "TEXT", maxLength: 30, nullable: true),
-                    RoundDate = table.Column<DateOnly>(type: "TEXT", nullable: false)
+                    RoundName = table.Column<string>(type: "TEXT", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,39 +79,39 @@ namespace FutnorteApp.Migrations
                 {
                     MatchId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    MatchDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    RoundId = table.Column<int>(type: "INTEGER", nullable: false),
+                    MatchDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
+                    RoundId = table.Column<int>(type: "INTEGER", nullable: true),
                     HomeTeamId = table.Column<int>(type: "INTEGER", nullable: false),
                     AwayTeamId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PlaceId = table.Column<int>(type: "INTEGER", nullable: false)
+                    PlaceId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Ronda = table.Column<int>(type: "INTEGER", nullable: true),
+                    Local = table.Column<int>(type: "INTEGER", nullable: true),
+                    Visitante = table.Column<int>(type: "INTEGER", nullable: true),
+                    Cancha = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Matches", x => x.MatchId);
                     table.ForeignKey(
-                        name: "FK_Matches_Places_PlaceId",
-                        column: x => x.PlaceId,
+                        name: "FK_Matches_Places_Cancha",
+                        column: x => x.Cancha,
                         principalTable: "Places",
-                        principalColumn: "PlaceId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PlaceId");
                     table.ForeignKey(
-                        name: "FK_Matches_Rounds_RoundId",
-                        column: x => x.RoundId,
+                        name: "FK_Matches_Rounds_Ronda",
+                        column: x => x.Ronda,
                         principalTable: "Rounds",
-                        principalColumn: "RoundId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "RoundId");
                     table.ForeignKey(
-                        name: "FK_Matches_Teams_AwayTeamId",
-                        column: x => x.AwayTeamId,
+                        name: "FK_Matches_Teams_Local",
+                        column: x => x.Local,
                         principalTable: "Teams",
-                        principalColumn: "TeamId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "TeamId");
                     table.ForeignKey(
-                        name: "FK_Matches_Teams_HomeTeamId",
-                        column: x => x.HomeTeamId,
+                        name: "FK_Matches_Teams_Visitante",
+                        column: x => x.Visitante,
                         principalTable: "Teams",
-                        principalColumn: "TeamId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "TeamId");
                 });
 
             migrationBuilder.CreateTable(
@@ -152,24 +151,24 @@ namespace FutnorteApp.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Matches_AwayTeamId",
+                name: "IX_Matches_Cancha",
                 table: "Matches",
-                column: "AwayTeamId");
+                column: "Cancha");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Matches_HomeTeamId",
+                name: "IX_Matches_Local",
                 table: "Matches",
-                column: "HomeTeamId");
+                column: "Local");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Matches_PlaceId",
+                name: "IX_Matches_Ronda",
                 table: "Matches",
-                column: "PlaceId");
+                column: "Ronda");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Matches_RoundId",
+                name: "IX_Matches_Visitante",
                 table: "Matches",
-                column: "RoundId");
+                column: "Visitante");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Results_AwayTeamId",

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutnorteApp.Migrations
 {
     [DbContext(typeof(FutnorteContext))]
-    [Migration("20230806052636_InitialCreate")]
+    [Migration("20230817020549_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -29,27 +29,39 @@ namespace FutnorteApp.Migrations
                     b.Property<int>("AwayTeamId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("Cancha")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("HomeTeamId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateOnly>("MatchDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("PlaceId")
+                    b.Property<int?>("Local")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("RoundId")
+                    b.Property<DateOnly?>("MatchDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("PlaceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Ronda")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("RoundId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Visitante")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("MatchId");
 
-                    b.HasIndex("AwayTeamId");
+                    b.HasIndex("Cancha");
 
-                    b.HasIndex("HomeTeamId");
+                    b.HasIndex("Local");
 
-                    b.HasIndex("PlaceId");
+                    b.HasIndex("Ronda");
 
-                    b.HasIndex("RoundId");
+                    b.HasIndex("Visitante");
 
                     b.ToTable("Matches");
                 });
@@ -143,9 +155,6 @@ namespace FutnorteApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateOnly>("RoundDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("RoundName")
                         .HasMaxLength(30)
                         .HasColumnType("TEXT");
@@ -187,29 +196,21 @@ namespace FutnorteApp.Migrations
 
             modelBuilder.Entity("FutnorteApp.Domain.Match", b =>
                 {
-                    b.HasOne("FutnorteApp.Domain.Team", "AwayTeam")
+                    b.HasOne("FutnorteApp.Domain.Place", "Place")
                         .WithMany()
-                        .HasForeignKey("AwayTeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Cancha");
 
                     b.HasOne("FutnorteApp.Domain.Team", "HomeTeam")
                         .WithMany()
-                        .HasForeignKey("HomeTeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FutnorteApp.Domain.Place", "Place")
-                        .WithMany()
-                        .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Local");
 
                     b.HasOne("FutnorteApp.Domain.Round", "Round")
                         .WithMany()
-                        .HasForeignKey("RoundId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Ronda");
+
+                    b.HasOne("FutnorteApp.Domain.Team", "AwayTeam")
+                        .WithMany()
+                        .HasForeignKey("Visitante");
 
                     b.Navigation("AwayTeam");
 

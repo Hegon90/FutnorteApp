@@ -11,7 +11,6 @@ namespace FutnorteApp.Domain
         [StringLength(30)]
         [Display(Name = "Nombre")]
         public string? RoundName { get; set; }
-        public DateOnly RoundDate { get; set; }
 
         // Entity Framework parameterless constructor.
         public Round()
@@ -19,11 +18,10 @@ namespace FutnorteApp.Domain
         }
 
         // Constructor to initialize the properties.
-        public Round(int roundId, string roundName, DateOnly roundDate)
+        public Round(int roundId, string roundName)
         {
             RoundId = roundId;
             RoundName = roundName;
-            RoundDate = roundDate;
         }
 
     }

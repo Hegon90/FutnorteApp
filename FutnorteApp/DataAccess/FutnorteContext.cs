@@ -1,6 +1,9 @@
 ﻿using FutnorteApp.Domain;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.IO;
+using System.Reflection;
+using System.Windows;
 
 namespace FutnorteApp.DataAccess
 {
@@ -19,17 +22,11 @@ namespace FutnorteApp.DataAccess
         {
             if (!optionsBuilder.IsConfigured)
             {
-                if (!optionsBuilder.IsConfigured)
-                {
-                    // Absoluthe path of the database
-                    Directory.CreateDirectory("Database");
-                    string connectionString = "Data Source=D:\\DotNetProjects\\FutnorteApp\\FutnorteApp\\Database\\Futnorte.db";
-                    optionsBuilder.UseSqlite(connectionString);
-                }
+                // Absolute path of the database
+                Directory.CreateDirectory("Database");
+                string connectionString = "Data Source=D:\\DotNetProjects\\FutnorteApp\\FutnorteApp\\Database\\Futnorte.db";
+                optionsBuilder.UseSqlite(connectionString);
             }
-
-
-
         }
     }
 }
