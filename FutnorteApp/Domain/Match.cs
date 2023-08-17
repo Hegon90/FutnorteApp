@@ -19,7 +19,7 @@ namespace FutnorteApp.Domain
         public int AwayTeamId { get; set; } = 0;
         public int? PlaceId { get; set; }
 
-        // Navigation properties (Foreign keys as objects).
+        // Foreign keys
         [ForeignKey("Ronda")]
         public Round? Round { get; set; }
 
@@ -33,9 +33,7 @@ namespace FutnorteApp.Domain
         public Place? Place { get; set; }
 
         // Entity Framework parameterless constructor.
-        public Match()
-        {
-        }
+        public Match() { }
 
         // Constructor to initialize the properties.
         public Match(int matchId, DateOnly? matchDate, int? roundId, int homeTeamId, int awayTeamId, int? placeId)

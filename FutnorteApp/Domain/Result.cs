@@ -9,9 +9,8 @@ namespace FutnorteApp.Domain
         // Properties.
         [Key]
         public int ResultId { get; set; } = 0;
-        [Required]
-        [Display(Name = "Fecha")]
-        public DateOnly ResultDate { get; set; }
+        [Required, Display(Name = "Fecha")]
+        public DateOnly ResultDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
         [Required]
         public int HomeScore { get; set; } = 0;
         [Required]
@@ -34,10 +33,7 @@ namespace FutnorteApp.Domain
 
 
         // Entity Framework parameterless constructor.
-        public Result()
-        {
-            ResultDate = DateOnly.FromDateTime(DateTime.Now);
-        }
+        public Result() { }
 
         // Constructor to initialize the properties.
         public Result(int resultId, DateOnly resultDate, int homeScore, int awayScore, int roundId, int homeTeamId, int awayTeamId)

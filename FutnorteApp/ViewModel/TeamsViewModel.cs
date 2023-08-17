@@ -19,7 +19,7 @@ namespace FutnorteApp
         {
             _teamService = teamService;
             _teams = new ObservableCollection<Team>();
-            Teams = new ObservableCollection<Team>();
+            Teams = _teams;
         }
 
 

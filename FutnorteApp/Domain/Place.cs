@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FutnorteApp.Domain
 {
@@ -13,13 +7,10 @@ namespace FutnorteApp.Domain
         // Properties.
         [Key]
         public int PlaceId { get; set; } = 0;
-        [Required]
-        [StringLength(100)]
-        [Display(Name = "Nombre")]
-
-        // Entity Framework parameterless constructor.
+        [Required, StringLength(100), Display(Name = "Nombre")]
         public string PlaceName { get; set; } = string.Empty;
 
+        // Entity Framework parameterless constructor.
         public Place() { }
 
         // Constructor to initialize the properties.
