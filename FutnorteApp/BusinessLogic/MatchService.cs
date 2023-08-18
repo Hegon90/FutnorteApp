@@ -10,14 +10,14 @@ namespace FutnorteApp.BusinessLogic
         private readonly MatchRepository _matchRepository;
         private readonly RoundRepository _roundRepository;
         private readonly TeamRepository _teamRepository;
-        private readonly PlaceRepository _placeRepository;
+        private readonly FieldRepository _fieldRepository;
         public MatchService(MatchRepository matchRepository, RoundRepository roundRepository, 
-            TeamRepository teamRepository, PlaceRepository placeRepository)
+            TeamRepository teamRepository, FieldRepository fieldRepository)
         {
             _matchRepository = matchRepository;
             _roundRepository = roundRepository;
             _teamRepository = teamRepository;
-            _placeRepository = placeRepository;
+            _fieldRepository = fieldRepository;
         }
 
         // Get all matches asynchronously
@@ -62,10 +62,10 @@ namespace FutnorteApp.BusinessLogic
             return await _teamRepository.GetAllTeams();
         }
 
-        // Get all places Asynchronously   
-        public async Task<List<Place>> GetAllPlaces()
+        // Get all fields Asynchronously   
+        public async Task<List<Field>> GetAllFields()
         {
-            return await _placeRepository.GetAllPlaces();
+            return await _fieldRepository.GetAllFields();
         }
     }
 }

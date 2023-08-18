@@ -1,9 +1,6 @@
 ﻿using FutnorteApp.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.IO;
-using System.Reflection;
-using System.Windows;
 
 namespace FutnorteApp.DataAccess
 {
@@ -15,7 +12,7 @@ namespace FutnorteApp.DataAccess
         public DbSet<Match> Matches { get; set; }
         public DbSet<Result> Results { get; set; }
         public DbSet<Record> Records { get; set; }
-        public DbSet<Place> Places { get; set; }
+        public DbSet<Field> Fields { get; set; }
 
         // Configuring the database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

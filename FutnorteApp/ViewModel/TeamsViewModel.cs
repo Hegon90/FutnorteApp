@@ -1,5 +1,4 @@
 ﻿using FutnorteApp.BusinessLogic;
-using FutnorteApp.DataAccess;
 using FutnorteApp.Domain;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -59,7 +58,7 @@ namespace FutnorteApp
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show($"Error loading teams: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error al cargar los equipos: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
