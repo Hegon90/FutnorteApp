@@ -19,17 +19,17 @@ namespace FutnorteApp.Domain
         public int AwayTeamId { get; set; } = 0;
         public int? FieldId { get; set; }
 
-        // Foreign keys
-        [ForeignKey("Ronda")]
+        // Navigation properties
+        [ForeignKey("RoundId")]
         public Round? Round { get; set; }
 
-        [ForeignKey("Local")]
+        [ForeignKey("HomeTeamId")]
         public Team? HomeTeam { get; set; }
 
-        [ForeignKey("Visitante")]
+        [ForeignKey("AwayTeamId")]
         public Team? AwayTeam { get; set; } 
 
-        [ForeignKey("Cancha")]
+        [ForeignKey("FieldId")]
         public Field? Field { get; set; }
 
         // Entity Framework parameterless constructor.

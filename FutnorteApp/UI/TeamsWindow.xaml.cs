@@ -15,7 +15,6 @@ namespace FutnorteApp.UI
         {
             InitializeComponent();
             var teamService = new TeamService(new TeamRepository(new FutnorteContext()));
-            DataContext = new TeamViewModel(teamService);
             _teamViewModel = new TeamViewModel(teamService);
             DataContext = _teamViewModel;
             _teamViewModel.SelectedTeam = null;
@@ -90,16 +89,6 @@ namespace FutnorteApp.UI
             txtTeamManager.Text = string.Empty;
             txtTeamPhoneNumber.Text = string.Empty;
             cboTeamGroup.Text = "N/A";
-        }
-
-        // Clear edit fields
-        public void ClearEditFields()
-        {
-            txtEditTeamName.Text = string.Empty;
-            txtEditTeamColor.Text = string.Empty;
-            txtEditTeamManager.Text = string.Empty;
-            txtEditTeamPhoneNumber.Text = string.Empty;
-            cboEditTeamGroup.Text = "N/A";
         }
     }
 }

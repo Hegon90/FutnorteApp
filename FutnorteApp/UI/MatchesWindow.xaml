@@ -1,0 +1,45 @@
+﻿<Window x:Class="FutnorteApp.UI.MatchesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FutnorteApp.UI"
+        mc:Ignorable="d"
+        Title="MatchesWindow" Height="720" Width="1080">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+        <!--Matches list-->
+        <Border>
+            <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding MatchesViewSource.View}"
+          AutoGenerateColumns="False" Width="600" CanUserAddRows="False"
+          HeadersVisibility="Column" BorderThickness="1">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Fecha" Binding="{Binding Matchdate}" Width="100"/>
+                    <DataGridTextColumn Header="Ronda" Binding="{Binding Round.RoundName}" Width="100"/>
+                    <DataGridTemplateColumn Header="Partido" Width="200">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                        <Run Text="{Binding HomeTeam.TeamName}" />
+                        <Run Text=" vs " />
+                        <Run Text="{Binding AwayTeam.TeamName}" />
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Cancha" Binding="{Binding Field.FieldName}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Border>
+    </Grid>
+</Window>

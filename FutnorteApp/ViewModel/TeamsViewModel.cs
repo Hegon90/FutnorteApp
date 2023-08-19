@@ -21,7 +21,6 @@ namespace FutnorteApp
             Teams = _teams;
         }
 
-
         public async Task InitializeAsync()
         {
             await LoadDataAsync();

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 
 namespace FutnorteApp
 {
@@ -29,7 +30,7 @@ namespace FutnorteApp
         {            
             await LoadTeamsAsync();
             await LoadRoundsAsync();
-            await LoadPlacesAsync();
+            await LoadFieldsAsync();
             await LoadMatchesAsync();
         }
 
@@ -44,12 +45,16 @@ namespace FutnorteApp
                 OnPropertyChanged();
             }
         }
+
+        // List of matches 
+        public CollectionViewSource MatchesViewSource { get; } = new CollectionViewSource();
         public async Task LoadMatchesAsync()
         {
             try
             {
                 var matches = await _matchService.GetAllMatches();
                 Matches = new ObservableCollection<Match>(matches);
+                MatchesViewSource.Source = Matches;
             }
             catch(System.Exception ex)
             {

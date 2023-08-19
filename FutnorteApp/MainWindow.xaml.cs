@@ -1,13 +1,4 @@
-﻿using FutnorteApp.BusinessLogic;
-using FutnorteApp.DataAccess;
-using FutnorteApp.Domain;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using System;
-using System.IO;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 
 namespace FutnorteApp
 {
