@@ -1,5 +1,6 @@
 ﻿using FutnorteApp.BusinessLogic;
 using FutnorteApp.Domain;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -23,6 +24,19 @@ namespace FutnorteApp
             Rounds = _rounds;
             _fields = new ObservableCollection<Field>();
             Fields = _fields;
+
+            //Create custom TimePicker
+            // Define the start and end times
+            TimeSpan startTime = new TimeSpan(8, 0, 0); // 08:00 AM
+            TimeSpan endTime = new TimeSpan(22, 0, 0); // 10:00 PM
+            TimeSpan increment = TimeSpan.FromMinutes(30); // 30 minutes
+
+            // Generate and add time values to the ObservableCollection
+            for (TimeSpan currentTime = startTime; currentTime <= endTime; currentTime += increment)
+            {
+                DateTime dateTime = DateTime.Today.Add(currentTime);
+                TimePicker.Add(dateTime.ToString("hh:mm tt"));
+            }
         }
 
         // Load data async
@@ -60,6 +74,23 @@ namespace FutnorteApp
             {
                 MessageBox.Show($"Error al cargar los partidos: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        // Add new match
+        public void AddMatch(DateTime? matchDate, string? matchTime, int? roundId, int homeTeamId, int awayTeamId, int? fieldId)
+        {
+            var newMatch = new Match
+            {
+                MatchDate = matchDate,
+                MatchTime = matchTime,
+                RoundId = roundId,
+                HomeTeamId = homeTeamId,
+                AwayTeamId = awayTeamId,
+                FieldId = fieldId
+            };
+
+            _matchService.AddMatch(newMatch);
+            Matches.Add(newMatch);
         }
 
         // Get the teams list
@@ -137,7 +168,12 @@ namespace FutnorteApp
             }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        // TimePicker list
+        public ObservableCollection<string> TimePicker { get; } = new ObservableCollection<string>();
+        
+        
+
+    public event PropertyChangedEventHandler? PropertyChanged;
         public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

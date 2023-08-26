@@ -19,10 +19,9 @@ namespace FutnorteApp.DataAccess
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // Absolute path of the database
-                Directory.CreateDirectory("Database");
-                string connectionString = "Data Source=D:\\DotNetProjects\\FutnorteApp\\FutnorteApp\\Database\\Futnorte.db";
-                optionsBuilder.UseSqlite(connectionString);
+                // SQL Server connection string
+                string connectionString = "Server=DESKTOP-QS89OD2;Database=Futnorte;Trusted_Connection = True;TrustServerCertificate=True;";
+                optionsBuilder.UseSqlServer(connectionString);
             }
         }
     }

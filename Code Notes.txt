@@ -9,3 +9,16 @@
                 };
                 roundRepository.AddRound(newRound);
             }
+
+- How to connect with SQLite
+// Configuring the database
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                // Absolute path of the database
+                Directory.CreateDirectory("Database");
+                string connectionString = "Data Source=D:\\DotNetProjects\\FutnorteApp\\FutnorteApp\\Database\\Futnorte.db";
+                optionsBuilder.UseSqlite(connectionString);
+            }
+        }

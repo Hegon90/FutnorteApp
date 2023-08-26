@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using FutnorteApp.UI;
+using System.Windows;
 
 namespace FutnorteApp
 {
@@ -10,16 +11,18 @@ namespace FutnorteApp
         public MainWindow()
         {
             InitializeComponent();
-            //Code to show database content in messagebox
+        }
 
-            //_teamViewModel = new TeamViewModel();
-            //_teamViewModel.LoadDataAsync();
-            //string message = "Teams:\n";
-            //foreach (var team in _teamViewModel.Teams)
-            //{
-            //    message += $"{team.TeamName}\n";
-            //}
-            //MessageBox.Show(message, "Teams List", MessageBoxButton.OK, MessageBoxImage.Information);
+        private void TeamsWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var teamsWindow = new TeamsWindow();
+            teamsWindow.Show();
+        }
+
+        private void MatchesWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var matchesWindow = new MatchesWindow();
+            matchesWindow.Show();
         }
     }
 }

@@ -49,7 +49,7 @@ namespace FutnorteApp.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al crear equipo: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error al registrar equipo: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

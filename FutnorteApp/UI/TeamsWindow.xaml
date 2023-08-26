@@ -104,7 +104,7 @@
                 <TextBox Name="txtTeamColor" Grid.Row="3" Grid.Column="1" Height="20" HorizontalAlignment="Left" 
                          VerticalAlignment="Top" Width="100">
                 </TextBox>
-                <Label Grid.Row="4" Width="auto" Height="25" HorizontalAlignment="Left" 
+                <Label Grid.Row="4" Width="auto" Height="27" HorizontalAlignment="Left" 
                        VerticalAlignment="Top">Delegado
                 </Label>
                 <TextBox Name="txtTeamManager" Grid.Row="4" Grid.Column="1" Height="20" HorizontalAlignment="Stretch" 
@@ -171,7 +171,7 @@
                          Text="{Binding SelectedTeam.TeamColor}"
                          IsEnabled="{Binding ElementName=chkEnableEdit, Path=IsChecked}">
                 </TextBox>
-                <Label Grid.Row="4" Width="auto" Height="25" HorizontalAlignment="Left" 
+                <Label Grid.Row="4" Width="auto" Height="27" HorizontalAlignment="Left" 
                        VerticalAlignment="Top">Delegado
                 </Label>
                 <TextBox Name="txtEditTeamManager" Grid.Row="4" Grid.Column="1" Height="20" 

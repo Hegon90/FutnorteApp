@@ -7,6 +7,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <Menu Background="#DAE4E2">
+            <MenuItem Header="Inicio"/>
+            <MenuItem Header="Equipos" Click="TeamsWindow_Click"/>
+            <MenuItem Header="Partidos" Click="MatchesWindow_Click"/>
+        </Menu>
     </Grid>
 </Window>
