@@ -107,7 +107,7 @@
         <Border Grid.Row="3">
             <DataGrid Language="es-Es" ItemsSource="{Binding MatchesViewSource.View}"
                 AutoGenerateColumns="False" Width="Auto" CanUserAddRows="False"
-                HeadersVisibility="Column" BorderThickness="1">
+                HeadersVisibility="Column" BorderThickness="1" SelectedItem="{Binding SelectedMatch}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Fecha" Binding="{Binding MatchDate,
                         StringFormat=dd-MMMM-yyyy}" Width="150"/>
@@ -119,6 +119,13 @@
                                         Width="*"/>
                     <DataGridTextColumn Header="Cancha" Binding="{Binding Field.FieldName}" Width="250"/>
                     <DataGridTextColumn Header="Hora" Binding="{Binding MatchTime}" Width="100"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Edit" Click="EditMatchButton_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>

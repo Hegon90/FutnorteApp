@@ -2,9 +2,7 @@
 using FutnorteApp.DataAccess;
 using FutnorteApp.Domain;
 using System;
-using System.Globalization;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace FutnorteApp.UI
 {
@@ -25,6 +23,7 @@ namespace FutnorteApp.UI
             var matchService = new MatchService(matchRepository, roundRepository, teamRepository, fieldRepository);
             _matchViewModel = new MatchViewModel(matchService);
             DataContext = _matchViewModel;
+            _matchViewModel.SelectedMatch = null;
         }
 
         protected override async void OnContentRendered(EventArgs e)
@@ -57,6 +56,18 @@ namespace FutnorteApp.UI
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al registrar partido: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void EditMatchButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedMatch = _matchViewModel.SelectedMatch;
+            if (selectedMatch != null)
+            {
+                int matchId = selectedMatch.MatchId;
+
+                var editMatchWindow = new EditMatchWindow(matchId);
+                editMatchWindow.ShowDialog();
             }
         }
     }

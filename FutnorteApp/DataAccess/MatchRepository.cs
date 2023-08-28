@@ -1,6 +1,7 @@
 ﻿using FutnorteApp.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FutnorteApp.DataAccess
@@ -21,9 +22,18 @@ namespace FutnorteApp.DataAccess
         }
 
         // Get match by Id
-        public Match? GetMatchById(int matchId) 
+        //public Match? GetMatchById(int matchId) 
+        //{
+        //    return _dbContext.Matches.Find(matchId);
+        //}
+        public Match? GetMatchById(int matchId)
         {
-            return _dbContext.Matches.Find(matchId);
+            return _dbContext.Matches
+                .Include(m => m.HomeTeam)
+                .Include(m => m.AwayTeam)
+                .Include(m => m.Round)
+                .Include(m => m.Field)
+                .FirstOrDefault(m => m.MatchId == matchId);
         }
 
         // Add new match
@@ -39,6 +49,7 @@ namespace FutnorteApp.DataAccess
             _dbContext.Matches.Update(match);
             _dbContext.SaveChanges();
         }
+
 
         // Delete match
         public void DeleteMatch(int matchId)

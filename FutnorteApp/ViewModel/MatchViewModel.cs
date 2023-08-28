@@ -1,8 +1,10 @@
 ﻿using FutnorteApp.BusinessLogic;
+using FutnorteApp.DataAccess;
 using FutnorteApp.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,6 +48,12 @@ namespace FutnorteApp
             await LoadRoundsAsync();
             await LoadFieldsAsync();
             await LoadMatchesAsync();
+        }
+
+        // Get match by Id
+        public Match? GetMatchById(int matchId)
+        {
+            return _matchService.GetMatchById(matchId);
         }
 
         // Get the matches list
@@ -92,6 +100,14 @@ namespace FutnorteApp
             _matchService.AddMatch(newMatch);
             Matches.Add(newMatch);
         }
+
+        // Update existing match
+        public void UpdateMatch(Match match)
+        {
+            _matchService.UpdateMatch(match);
+        }
+
+
 
         // Get the teams list
         private ObservableCollection<Team> _teams;
@@ -170,13 +186,23 @@ namespace FutnorteApp
 
         // TimePicker list
         public ObservableCollection<string> TimePicker { get; } = new ObservableCollection<string>();
-        
-        
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-        public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        public event PropertyChangedEventHandler? PropertyChanged;
+            public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+
+        // Get the values of the selected row in datagrids
+        private Match? _selectedMatch;
+        public Match? SelectedMatch
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get { return _selectedMatch; }
+            set
+            {
+                _selectedMatch = value;
+                OnPropertyChanged();
+            }
         }
     }
 }
