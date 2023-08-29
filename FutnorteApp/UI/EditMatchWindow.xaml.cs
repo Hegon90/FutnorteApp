@@ -52,7 +52,7 @@ namespace FutnorteApp.UI
             await _matchViewModel.InitializeAsync();
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             // Retrieve updated match properties from UI elements
             DateTime? matchDate = dpMatchDate.SelectedDate;
@@ -64,23 +64,28 @@ namespace FutnorteApp.UI
 
             if (homeTeam != null && awayTeam != null)
             {
-                // Create a new Match instance with updated properties
-                Match updatedMatch = new Match
+                // Find the existing match entity within the Matches collection
+                Match? existingMatch = _matchViewModel.Matches.FirstOrDefault(match => match.MatchId == _selectedMatchId);
+
+                if (existingMatch != null)
                 {
-                    MatchId = _selectedMatchId,
-                    MatchDate = matchDate,
-                    MatchTime = matchTime,
-                    RoundId = round?.RoundId,
-                    HomeTeamId = homeTeam.TeamId,
-                    AwayTeamId = awayTeam.TeamId,
-                    FieldId = field?.FieldId
-                };
-                _matchViewModel.UpdateMatch(updatedMatch);
+                    // Update the existing match properties
+                    existingMatch.MatchDate = matchDate;
+                    existingMatch.MatchTime = matchTime;
+                    existingMatch.RoundId = round?.RoundId;
+                    existingMatch.HomeTeamId = homeTeam.TeamId;
+                    existingMatch.AwayTeamId = awayTeam.TeamId;
+                    existingMatch.FieldId = field?.FieldId;
+
+                    // Update the match in the ViewModel
+                    _matchViewModel.UpdateMatch(existingMatch);
+                    await _matchViewModel.LoadMatchesAsync();
+                    Close();
+                    MessageBox.Show("Partido editado!", "Editar", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
             }
-            
-            // Close the EditMatchWindow
-            Close();
         }
+
     }
 }
 
