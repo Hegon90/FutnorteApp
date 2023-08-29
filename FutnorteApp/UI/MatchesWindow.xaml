@@ -119,10 +119,21 @@
                                         Width="*"/>
                     <DataGridTextColumn Header="Cancha" Binding="{Binding Field.FieldName}" Width="250"/>
                     <DataGridTextColumn Header="Hora" Binding="{Binding MatchTime}" Width="100"/>
+                    <!--Edit Button-->
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Edit" Click="EditMatchButton_Click"/>
+                                <Button Content="Editar" Click="EditMatchButton_Click"
+                                        Background="LightGoldenrodYellow"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--Delete Button-->
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Eliminar" Click="DeleteMatchButton_Click"
+                                        Background="Red"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

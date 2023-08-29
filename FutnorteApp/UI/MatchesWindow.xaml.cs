@@ -2,6 +2,8 @@
 using FutnorteApp.DataAccess;
 using FutnorteApp.Domain;
 using System;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace FutnorteApp.UI
@@ -44,7 +46,16 @@ namespace FutnorteApp.UI
                 string? matchTime = cbMatchTime.SelectedItem as string;
                 if (matchDate != null && round != null && homeTeam != null && awayTeam != null && field != null)
                 {
-                    _matchViewModel.AddMatch(matchDate.Value, matchTime, round.RoundId, homeTeam.TeamId, awayTeam.TeamId, field.FieldId);
+                    var newMatch = new Match
+                    {
+                        MatchDate = matchDate,
+                        MatchTime = matchTime,
+                        RoundId = round.RoundId,
+                        HomeTeamId = homeTeam.TeamId,
+                        AwayTeamId = awayTeam.TeamId,
+                        FieldId = field.FieldId
+                    };
+                    _matchViewModel.AddMatch(newMatch);
                     MessageBox.Show("Registro Exitoso!", "Registrar", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -66,8 +77,22 @@ namespace FutnorteApp.UI
             {
                 int matchId = selectedMatch.MatchId;
 
-                var editMatchWindow = new EditMatchWindow(matchId);
+                var editMatchWindow = new EditMatchWindow(matchId, _matchViewModel);
                 editMatchWindow.ShowDialog();
+            }
+        }
+
+        private void DeleteMatchButton_Click(Object sender, RoutedEventArgs e)
+        {
+            var matchToDelete = _matchViewModel.SelectedMatch;
+            if (matchToDelete != null)
+            {
+                int matchId = matchToDelete.MatchId;
+                _matchViewModel.DeleteMatch(matchId);
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un partido.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

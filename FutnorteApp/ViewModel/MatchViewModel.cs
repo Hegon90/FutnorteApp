@@ -85,18 +85,8 @@ namespace FutnorteApp
         }
 
         // Add new match
-        public void AddMatch(DateTime? matchDate, string? matchTime, int? roundId, int homeTeamId, int awayTeamId, int? fieldId)
+        public void AddMatch(Match newMatch)
         {
-            var newMatch = new Match
-            {
-                MatchDate = matchDate,
-                MatchTime = matchTime,
-                RoundId = roundId,
-                HomeTeamId = homeTeamId,
-                AwayTeamId = awayTeamId,
-                FieldId = fieldId
-            };
-
             _matchService.AddMatch(newMatch);
             Matches.Add(newMatch);
         }
@@ -107,6 +97,22 @@ namespace FutnorteApp
             _matchService.UpdateMatch(match);
         }
 
+        // Delete match by Id
+        public void DeleteMatch(int matchId)
+        {
+            MessageBoxResult result = MessageBox.Show("Esta seguro de eliminar este partido?", "Confirmation", 
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                _matchService.DeleteMatch(matchId);
+                // Find and remove the deleted match from the Matches collection
+                Match? match = Matches.FirstOrDefault(m => m.MatchId == matchId);
+                if (match != null)
+                {
+                    Matches.Remove(match);
+                }
+            }
+        }
 
 
         // Get the teams list

@@ -1,6 +1,4 @@
-﻿using FutnorteApp.BusinessLogic;
-using FutnorteApp.DataAccess;
-using FutnorteApp.Domain;
+﻿using FutnorteApp.Domain;
 using System;
 using System.Linq;
 using System.Windows;
@@ -14,21 +12,15 @@ namespace FutnorteApp.UI
     {
         private readonly MatchViewModel _matchViewModel;
         private int _selectedMatchId;
-        public EditMatchWindow(int matchId)
+        internal EditMatchWindow(int matchId, MatchViewModel matchViewModel)
         {
             InitializeComponent();
-            var futnorteContext = new FutnorteContext();
-            var matchRepository = new MatchRepository(futnorteContext);
-            var roundRepository = new RoundRepository(futnorteContext);
-            var teamRepository = new TeamRepository(futnorteContext);
-            var fieldRepository = new FieldRepository(futnorteContext);
-            var matchService = new MatchService(matchRepository, roundRepository, teamRepository, fieldRepository);
-            _matchViewModel = new MatchViewModel(matchService);
+            _matchViewModel = matchViewModel;
             DataContext = _matchViewModel;
             _selectedMatchId = matchId;
 
             // Retrieve match details based on matchId
-            var selectedMatch = _matchViewModel.GetMatchById(matchId);
+            var selectedMatch = _matchViewModel.SelectedMatch;
             if (selectedMatch != null)
             {
                 dpMatchDate.SelectedDate = selectedMatch.MatchDate;
