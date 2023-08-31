@@ -8,10 +8,9 @@ internal class Match
     // Properties.
     [Key]
     public int MatchId { get; set; } = 0;
-    [Column(TypeName = "date")]
-    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-    public DateTime? MatchDate { get; set; }
-    public string? MatchTime { get; set; }
+    [Column(TypeName = "datetime2")]
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
+    public DateTime? MatchDateTime { get; set; }
 
     // Foreign keys.
     public int? RoundId { get; set; }
@@ -19,7 +18,7 @@ internal class Match
     public int HomeTeamId { get; set; } = 0;
     [Required]
     public int AwayTeamId { get; set; } = 0;
-    public int? FieldId { get; set; }
+    public int? FieldId { get; set; } 
 
     // Navigation properties
     [ForeignKey("RoundId")]
@@ -38,11 +37,10 @@ internal class Match
     public Match() { }
 
     // Constructor to initialize the properties.
-    public Match(int matchId, DateTime? matchDate, string? matchTime, int? roundId, int homeTeamId, int awayTeamId, int? fieldId)
+    public Match(int matchId, DateTime? matchDateTime, int? roundId, int homeTeamId, int awayTeamId, int? fieldId)
     {
         MatchId = matchId;
-        MatchDate = matchDate;
-        MatchTime = matchTime;
+        MatchDateTime = matchDateTime;
         RoundId = roundId;
         HomeTeamId = homeTeamId;
         AwayTeamId = awayTeamId;

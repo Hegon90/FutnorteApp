@@ -5,6 +5,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace FutnorteApp.UI
 {
@@ -34,26 +35,77 @@ namespace FutnorteApp.UI
             await _matchViewModel.InitializeAsync();
         }
 
+        //private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        DateTime? matchDateTime = null;
+        //        if (dpMatchDate.SelectedDate.HasValue)
+        //        {
+        //            matchDateTime = dpMatchDate.SelectedDate.Value.Date + ((DateTime)cbMatchTime.SelectedItem).TimeOfDay;
+        //        }
+        //        Round? round = cbRound.SelectedItem as Round;
+        //        Team? homeTeam = cbHomeTeam.SelectedItem as Team;
+        //        Team? awayTeam = cbAwayTeam.SelectedItem as Team;
+        //        Field? field = cbField.SelectedItem as Field;
+        //        if (matchDateTime != null && round != null && homeTeam != null && awayTeam != null && field != null)
+        //        {
+        //            var newMatch = new Match
+        //            {
+        //                MatchDateTime = matchDateTime,
+        //                RoundId = round.RoundId,
+        //                HomeTeamId = homeTeam.TeamId,
+        //                AwayTeamId = awayTeam.TeamId,
+        //                FieldId = field.FieldId
+        //            };
+        //            _matchViewModel.AddMatch(newMatch);
+        //            MessageBox.Show("Registro Exitoso!", "Registrar", MessageBoxButton.OK, MessageBoxImage.Information);
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Fallo en el registro.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Error al registrar partido: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
+
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                DateTime? matchDate = dpMatchDate.SelectedDate;
+                // Configure necessary fields
                 Round? round = cbRound.SelectedItem as Round;
                 Team? homeTeam = cbHomeTeam.SelectedItem as Team;
                 Team? awayTeam = cbAwayTeam.SelectedItem as Team;
+                
+                // Validate if cbRound, cbHomeTeam, and cbAwayTeam are empty
+                if (round == null || homeTeam == null || awayTeam == null)
+                {
+                    MessageBox.Show("Debe seleccionar minimo: Ronda, Equipo Local y Equipo Visitante.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Rest of the fields
                 Field? field = cbField.SelectedItem as Field;
-                string? matchTime = cbMatchTime.SelectedItem as string;
-                if (matchDate != null && round != null && homeTeam != null && awayTeam != null && field != null)
+                DateTime? matchDateTime = DateTime.Now;
+                if (dpMatchDate.SelectedDate.HasValue && cbMatchTime.SelectedItem != null)
+                {
+                    matchDateTime = dpMatchDate.SelectedDate.Value.Date + ((DateTime)cbMatchTime.SelectedItem).TimeOfDay;
+                }
+
+                if (round != null && homeTeam != null && awayTeam != null)
                 {
                     var newMatch = new Match
                     {
-                        MatchDate = matchDate,
-                        MatchTime = matchTime,
+                        MatchDateTime = matchDateTime,
                         RoundId = round.RoundId,
                         HomeTeamId = homeTeam.TeamId,
                         AwayTeamId = awayTeam.TeamId,
-                        FieldId = field.FieldId
+                        FieldId = field?.FieldId
                     };
                     _matchViewModel.AddMatch(newMatch);
                     MessageBox.Show("Registro Exitoso!", "Registrar", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -62,13 +114,13 @@ namespace FutnorteApp.UI
                 {
                     MessageBox.Show("Fallo en el registro.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al registrar partido: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         private void EditMatchButton_Click(object sender, RoutedEventArgs e)
         {

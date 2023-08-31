@@ -50,7 +50,7 @@ namespace FutnorteApp.Migrations
                 {
                     RoundId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoundName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                    RoundName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,8 +80,7 @@ namespace FutnorteApp.Migrations
                 {
                     MatchId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MatchDate = table.Column<DateTime>(type: "date", nullable: true),
-                    MatchTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MatchDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RoundId = table.Column<int>(type: "int", nullable: true),
                     HomeTeamId = table.Column<int>(type: "int", nullable: false),
                     AwayTeamId = table.Column<int>(type: "int", nullable: false),
@@ -104,12 +103,14 @@ namespace FutnorteApp.Migrations
                         name: "FK_Matches_Teams_AwayTeamId",
                         column: x => x.AwayTeamId,
                         principalTable: "Teams",
-                        principalColumn: "TeamId");
+                        principalColumn: "TeamId",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Matches_Teams_HomeTeamId",
                         column: x => x.HomeTeamId,
                         principalTable: "Teams",
-                        principalColumn: "TeamId");
+                        principalColumn: "TeamId",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutnorteApp.Migrations
 {
     [DbContext(typeof(FutnorteContext))]
-    [Migration("20230825201524_InitialCreate")]
+    [Migration("20230830153112_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -178,11 +178,8 @@ namespace FutnorteApp.Migrations
                     b.Property<int>("HomeTeamId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("MatchDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("MatchTime")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("MatchDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("RoundId")
                         .HasColumnType("int");

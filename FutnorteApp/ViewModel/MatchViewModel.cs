@@ -2,6 +2,7 @@
 using FutnorteApp.DataAccess;
 using FutnorteApp.Domain;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace FutnorteApp
     internal class MatchViewModel : INotifyPropertyChanged
     {
         private readonly MatchService _matchService;
+        public List<DateTime> TimePicker { get; set; }
+
         public MatchViewModel(MatchService matchService)
         {
             _matchService = matchService;
@@ -27,17 +30,14 @@ namespace FutnorteApp
             _fields = new ObservableCollection<Field>();
             Fields = _fields;
 
-            //Create custom TimePicker
-            // Define the start and end times
-            TimeSpan startTime = new TimeSpan(8, 0, 0); // 08:00 AM
-            TimeSpan endTime = new TimeSpan(22, 0, 0); // 10:00 PM
-            TimeSpan increment = TimeSpan.FromMinutes(30); // 30 minutes
-
-            // Generate and add time values to the ObservableCollection
-            for (TimeSpan currentTime = startTime; currentTime <= endTime; currentTime += increment)
+            // Custom TimePicker
+            TimePicker = new List<DateTime>();
+            for (int i = 6; i < 23; i++)
             {
-                DateTime dateTime = DateTime.Today.Add(currentTime);
-                TimePicker.Add(dateTime.ToString("hh:mm tt"));
+                TimePicker.Add(new DateTime(1, 1, 1, i, 0, 0));
+                TimePicker.Add(new DateTime(1, 1, 1, i, 15, 0));
+                TimePicker.Add(new DateTime(1, 1, 1, i, 30, 0));
+                TimePicker.Add(new DateTime(1, 1, 1, i, 45, 0));
             }
         }
 
@@ -189,9 +189,6 @@ namespace FutnorteApp
                 MessageBox.Show($"Error al cargar las canchas: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        // TimePicker list
-        public ObservableCollection<string> TimePicker { get; } = new ObservableCollection<string>();
 
         public event PropertyChangedEventHandler? PropertyChanged;
             public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

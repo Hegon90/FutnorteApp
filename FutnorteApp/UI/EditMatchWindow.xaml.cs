@@ -1,6 +1,8 @@
 ﻿using FutnorteApp.Domain;
+using MahApps.Metro.Controls;
 using System;
 using System.Linq;
+using System.Text;
 using System.Windows;
 
 namespace FutnorteApp.UI
@@ -23,8 +25,14 @@ namespace FutnorteApp.UI
             var selectedMatch = _matchViewModel.SelectedMatch;
             if (selectedMatch != null)
             {
-                dpMatchDate.SelectedDate = selectedMatch.MatchDate;
-                cbMatchTime.SelectedItem = selectedMatch.MatchTime;
+                // Find the item in the ComboBox's list of items that corresponds to the time of day
+                cbMatchTime.ItemsSource = _matchViewModel.TimePicker;
+                var timeOfDay = ((DateTime)selectedMatch.MatchDateTime).TimeOfDay;
+                var selectedTime = cbMatchTime.Items.Cast<DateTime>().FirstOrDefault(dt => dt.TimeOfDay == timeOfDay);
+
+                // Set the SelectedItem property to the found item
+                dpMatchDate.SelectedDate = selectedMatch.MatchDateTime;
+                cbMatchTime.SelectedItem = selectedTime;
                 cbHomeTeam.SelectedItem = selectedMatch.HomeTeam;
                 cbHomeTeam.DisplayMemberPath = "TeamName";
                 cbAwayTeam.SelectedItem = selectedMatch.AwayTeam;
@@ -47,8 +55,7 @@ namespace FutnorteApp.UI
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             // Retrieve updated match properties from UI elements
-            DateTime? matchDate = dpMatchDate.SelectedDate;
-            string? matchTime = cbMatchTime.SelectedItem as string;
+            DateTime? matchDateTime = dpMatchDate.SelectedDate;
             Round? round = cbRound.SelectedItem as Round;
             Team? homeTeam = cbHomeTeam.SelectedItem as Team;
             Team? awayTeam = cbAwayTeam.SelectedItem as Team;
@@ -62,8 +69,7 @@ namespace FutnorteApp.UI
                 if (existingMatch != null)
                 {
                     // Update the existing match properties
-                    existingMatch.MatchDate = matchDate;
-                    existingMatch.MatchTime = matchTime;
+                    existingMatch.MatchDateTime = matchDateTime;
                     existingMatch.RoundId = round?.RoundId;
                     existingMatch.HomeTeamId = homeTeam.TeamId;
                     existingMatch.AwayTeamId = awayTeam.TeamId;

@@ -8,7 +8,7 @@ namespace FutnorteApp.Domain
         [Key]
         public int FieldId { get; set; } = 0;
         [Required, StringLength(100), Display(Name = "Nombre")]
-        public string FieldName { get; set; } = string.Empty;
+        public string? FieldName { get; set; }
 
         // Entity Framework parameterless constructor.
         public Field() { }

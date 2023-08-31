@@ -4,13 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:local="clr-namespace:FutnorteApp.UI"
         mc:Ignorable="d"
         Title="MatchesWindow" Height="720" Width="1080">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="170"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
@@ -27,29 +26,33 @@
         <!--Add Match-->
         <Border Grid.Row="1" BorderThickness="2" BorderBrush="#4CABE7">
             <Grid Grid.Row="1" Height="50" VerticalAlignment="Top">
-                <Grid.RowDefinitions>
-
-                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="160"/>
                     <ColumnDefinition Width="180"/>
                     <ColumnDefinition Width="180"/>
                     <ColumnDefinition Width="180"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="130"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Height="25" Width="150" HorizontalAlignment="Left" 
                        VerticalAlignment="Top" Margin="10,0,0,0" FontWeight="Bold">
-                    Fecha
+                    Fecha y Hora
                 </Label>
-                <DatePicker Name="dpMatchDate" VerticalAlignment="Bottom" Height="25" Width="Auto" 
+                <DatePicker Name="dpMatchDate" VerticalAlignment="Bottom" Height="25" Width="100" 
                             SelectedDate="{x:Static sys:DateTime.Now}"
                             HorizontalAlignment="Left" Margin="10,0,0,0">
                     <DatePicker.Language>
                         <x:XmlLanguage>es-ES</x:XmlLanguage>
                     </DatePicker.Language>
                 </DatePicker>
+                <ComboBox Name="cbMatchTime" VerticalAlignment="Bottom" Height="25" Width="100"
+                          Margin="120,0,0,0" HorizontalAlignment="Left" ItemsSource="{Binding TimePicker}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding StringFormat='{}{0:hh:mm tt}', ConverterCulture='es-CO'}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
                 <Label Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left"
                        VerticalAlignment="Top" FontWeight="Bold">
                     Jornada
@@ -85,15 +88,7 @@
                           HorizontalAlignment="Left" VerticalAlignment="Bottom"
                           ItemsSource="{Binding Fields}" DisplayMemberPath="FieldName">
                 </ComboBox>
-                <Label Grid.Column="5" Height="25" Width="100" HorizontalAlignment="Left" 
-                       VerticalAlignment="Top" FontWeight="Bold">
-                    Hora
-                </Label>
-                <ComboBox Name="cbMatchTime" Grid.Column="5" Height="25" Width="100"
-                          HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                          ItemsSource="{Binding TimePicker}">
-                </ComboBox>
-                <Button Grid.Column="6" Width="80" Height="25" VerticalAlignment="Bottom"
+                <Button Grid.Column="5" Width="80" Height="25" VerticalAlignment="Bottom"
                         Background="DeepSkyBlue" Click="RegisterButton_Click">
                     Registrar
                 </Button>
@@ -105,12 +100,12 @@
             Partidos Programados
         </TextBlock>
         <Border Grid.Row="3">
-            <DataGrid Language="es-Es" ItemsSource="{Binding MatchesViewSource.View}"
+            <DataGrid Language="es-CO" ItemsSource="{Binding MatchesViewSource.View}"
                 AutoGenerateColumns="False" Width="Auto" CanUserAddRows="False"
                 HeadersVisibility="Column" BorderThickness="1" SelectedItem="{Binding SelectedMatch}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Fecha" Binding="{Binding MatchDate,
-                        StringFormat=dd-MMMM-yyyy}" Width="150"/>
+                    <DataGridTextColumn Header="Fecha" Binding="{Binding MatchDateTime, StringFormat=dd-MMMM-yyyy}"
+                                        Width="150"/>
                     <DataGridTextColumn Header="Jornada" Binding="{Binding Round.RoundName}" 
                                         Width="150"/>
                     <DataGridTextColumn Header="Local" Binding="{Binding HomeTeam.TeamName}" 
@@ -118,7 +113,8 @@
                     <DataGridTextColumn Header="Vistante" Binding="{Binding AwayTeam.TeamName}" 
                                         Width="*"/>
                     <DataGridTextColumn Header="Cancha" Binding="{Binding Field.FieldName}" Width="250"/>
-                    <DataGridTextColumn Header="Hora" Binding="{Binding MatchTime}" Width="100"/>
+                    <DataGridTextColumn Header="Hora" Binding="{Binding MatchDateTime, StringFormat='{}{0:hh:mm tt}'}" 
+                                        Width="100"/>
                     <!--Edit Button-->
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>

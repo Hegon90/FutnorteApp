@@ -175,11 +175,8 @@ namespace FutnorteApp.Migrations
                     b.Property<int>("HomeTeamId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("MatchDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("MatchTime")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("MatchDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("RoundId")
                         .HasColumnType("int");
