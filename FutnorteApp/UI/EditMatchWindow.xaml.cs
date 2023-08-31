@@ -2,7 +2,6 @@
 using MahApps.Metro.Controls;
 using System;
 using System.Linq;
-using System.Text;
 using System.Windows;
 
 namespace FutnorteApp.UI
@@ -21,18 +20,22 @@ namespace FutnorteApp.UI
             DataContext = _matchViewModel;
             _selectedMatchId = matchId;
 
-            // Retrieve match details based on matchId
-            var selectedMatch = _matchViewModel.SelectedMatch;
+            Match? selectedMatch = _matchViewModel.SelectedMatch;
             if (selectedMatch != null)
             {
                 // Find the item in the ComboBox's list of items that corresponds to the time of day
                 cbMatchTime.ItemsSource = _matchViewModel.TimePicker;
-                var timeOfDay = ((DateTime)selectedMatch.MatchDateTime).TimeOfDay;
-                var selectedTime = cbMatchTime.Items.Cast<DateTime>().FirstOrDefault(dt => dt.TimeOfDay == timeOfDay);
 
-                // Set the SelectedItem property to the found item
-                dpMatchDate.SelectedDate = selectedMatch.MatchDateTime;
-                cbMatchTime.SelectedItem = selectedTime;
+                // Check if selectedMatch.MatchDateTime is not null before accessing its properties
+                var timeOfDay = selectedMatch.MatchDateTime?.TimeOfDay;
+
+                if (timeOfDay != null)
+                {
+                    DateTime selectedTime = cbMatchTime.Items.Cast<DateTime>().FirstOrDefault(dt => dt.TimeOfDay == timeOfDay);
+                    dpMatchDate.SelectedDate = selectedMatch.MatchDateTime;
+                    cbMatchTime.SelectedItem = selectedTime;
+                }
+
                 cbHomeTeam.SelectedItem = selectedMatch.HomeTeam;
                 cbHomeTeam.DisplayMemberPath = "TeamName";
                 cbAwayTeam.SelectedItem = selectedMatch.AwayTeam;
@@ -54,36 +57,60 @@ namespace FutnorteApp.UI
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Retrieve updated match properties from UI elements
-            DateTime? matchDateTime = dpMatchDate.SelectedDate;
+            // Configure necessary fields
             Round? round = cbRound.SelectedItem as Round;
             Team? homeTeam = cbHomeTeam.SelectedItem as Team;
             Team? awayTeam = cbAwayTeam.SelectedItem as Team;
-            Field? field = cbField.SelectedItem as Field;
 
-            if (homeTeam != null && awayTeam != null)
+            // Validate if cbRound, cbHomeTeam, and cbAwayTeam are empty
+            if (round == null || homeTeam == null || awayTeam == null)
+            {
+                MessageBox.Show("Debe seleccionar minimo: Ronda, Equipo Local y Equipo Visitante.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Rest of the fields
+            Field? field = cbField.SelectedItem as Field;
+            DateTime? matchDateTime = DateTime.Now;
+            if (dpMatchDate.SelectedDate.HasValue && cbMatchTime.SelectedItem != null)
+            {
+                matchDateTime = dpMatchDate.SelectedDate.Value.Date + ((DateTime)cbMatchTime.SelectedItem).TimeOfDay;
+            }
+
+            if (round != null && homeTeam != null && awayTeam != null)
             {
                 // Find the existing match entity within the Matches collection
                 Match? existingMatch = _matchViewModel.Matches.FirstOrDefault(match => match.MatchId == _selectedMatchId);
 
                 if (existingMatch != null)
                 {
-                    // Update the existing match properties
-                    existingMatch.MatchDateTime = matchDateTime;
-                    existingMatch.RoundId = round?.RoundId;
-                    existingMatch.HomeTeamId = homeTeam.TeamId;
-                    existingMatch.AwayTeamId = awayTeam.TeamId;
-                    existingMatch.FieldId = field?.FieldId;
-
-                    // Update the match in the ViewModel
+                    UpdateMatchProperties(existingMatch, matchDateTime.Value, round.RoundId, homeTeam.TeamId, awayTeam.TeamId, field?.FieldId);
+                    if (existingMatch.RoundId == 1)
+                    {
+                        existingMatch.MatchDateTime = null;
+                        existingMatch.FieldId = null;
+                    }
                     _matchViewModel.UpdateMatch(existingMatch);
                     await _matchViewModel.LoadMatchesAsync();
                     Close();
                     MessageBox.Show("Partido editado!", "Editar", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
+                else
+                {
+                    MessageBox.Show("Fallo en la edición.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
             }
         }
 
+        private void UpdateMatchProperties(Match existingMatch, DateTime matchDateTime, int roundId, int homeTeamId, int awayTeamId, int? fieldId)
+        {
+            existingMatch.MatchDateTime = matchDateTime;
+            existingMatch.RoundId = roundId;
+            existingMatch.HomeTeamId = homeTeamId;
+            existingMatch.AwayTeamId = awayTeamId;
+            existingMatch.FieldId = fieldId;
+        }
     }
 }
 

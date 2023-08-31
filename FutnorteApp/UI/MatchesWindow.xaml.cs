@@ -107,6 +107,11 @@ namespace FutnorteApp.UI
                         AwayTeamId = awayTeam.TeamId,
                         FieldId = field?.FieldId
                     };
+                    if(newMatch.RoundId == 1)
+                    {
+                        newMatch.MatchDateTime = null;
+                        newMatch.FieldId = null;
+                    }
                     _matchViewModel.AddMatch(newMatch);
                     MessageBox.Show("Registro Exitoso!", "Registrar", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
