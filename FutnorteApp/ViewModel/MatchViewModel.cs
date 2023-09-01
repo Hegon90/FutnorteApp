@@ -1,5 +1,4 @@
 ﻿using FutnorteApp.BusinessLogic;
-using FutnorteApp.DataAccess;
 using FutnorteApp.Domain;
 using System;
 using System.Collections.Generic;
@@ -190,12 +189,6 @@ namespace FutnorteApp
             }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-            public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-
         // Get the values of the selected row in datagrids
         private Match? _selectedMatch;
         public Match? SelectedMatch
@@ -206,6 +199,13 @@ namespace FutnorteApp
                 _selectedMatch = value;
                 OnPropertyChanged();
             }
+        }
+
+        // OnPropertyChanged Method
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

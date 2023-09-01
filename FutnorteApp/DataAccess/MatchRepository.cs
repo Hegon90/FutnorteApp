@@ -22,10 +22,6 @@ namespace FutnorteApp.DataAccess
         }
 
         // Get match by Id
-        //public Match? GetMatchById(int matchId) 
-        //{
-        //    return _dbContext.Matches.Find(matchId);
-        //}
         public Match? GetMatchById(int matchId)
         {
             return _dbContext.Matches

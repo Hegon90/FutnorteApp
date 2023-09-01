@@ -18,13 +18,10 @@ namespace FutnorteApp.Domain
         public int AwayScore { get; set; } = 0;
 
         // Foreign keys.
-        public int RoundId { get; set; }
         [Required]
         public int MatchId { get; set; } = 0;
 
         // Navigation properties (Foreign keys as objects).
-        [ForeignKey("RoundId")]
-        public Round? Round { get; set; }
         [ForeignKey("MatchId")]
         public Match? Match { get; set; }
 
@@ -33,15 +30,13 @@ namespace FutnorteApp.Domain
         public Result() { }
 
         // Constructor to initialize the properties.
-        public Result(int resultId, DateTime resultDate, int homeScore, int awayScore, int roundId, int matchId)
+        public Result(int resultId, DateTime resultDate, int homeScore, int awayScore, int matchId)
         {
             ResultId = resultId;
             ResultDate = resultDate;
             HomeScore = homeScore;
             AwayScore = awayScore;
-            RoundId = roundId;
             MatchId = matchId;
         }
-
     }
 }

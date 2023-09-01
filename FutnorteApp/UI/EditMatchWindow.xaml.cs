@@ -77,7 +77,7 @@ namespace FutnorteApp.UI
                 matchDateTime = dpMatchDate.SelectedDate.Value.Date + ((DateTime)cbMatchTime.SelectedItem).TimeOfDay;
             }
 
-            if (round != null && homeTeam != null && awayTeam != null)
+            if (round != null && homeTeam != null && awayTeam != null && homeTeam != awayTeam)
             {
                 // Find the existing match entity within the Matches collection
                 Match? existingMatch = _matchViewModel.Matches.FirstOrDefault(match => match.MatchId == _selectedMatchId);

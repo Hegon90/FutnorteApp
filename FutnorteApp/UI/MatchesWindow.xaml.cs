@@ -35,44 +35,6 @@ namespace FutnorteApp.UI
             await _matchViewModel.InitializeAsync();
         }
 
-        //private void RegisterButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        DateTime? matchDateTime = null;
-        //        if (dpMatchDate.SelectedDate.HasValue)
-        //        {
-        //            matchDateTime = dpMatchDate.SelectedDate.Value.Date + ((DateTime)cbMatchTime.SelectedItem).TimeOfDay;
-        //        }
-        //        Round? round = cbRound.SelectedItem as Round;
-        //        Team? homeTeam = cbHomeTeam.SelectedItem as Team;
-        //        Team? awayTeam = cbAwayTeam.SelectedItem as Team;
-        //        Field? field = cbField.SelectedItem as Field;
-        //        if (matchDateTime != null && round != null && homeTeam != null && awayTeam != null && field != null)
-        //        {
-        //            var newMatch = new Match
-        //            {
-        //                MatchDateTime = matchDateTime,
-        //                RoundId = round.RoundId,
-        //                HomeTeamId = homeTeam.TeamId,
-        //                AwayTeamId = awayTeam.TeamId,
-        //                FieldId = field.FieldId
-        //            };
-        //            _matchViewModel.AddMatch(newMatch);
-        //            MessageBox.Show("Registro Exitoso!", "Registrar", MessageBoxButton.OK, MessageBoxImage.Information);
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Fallo en el registro.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"Error al registrar partido: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //}
-
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -97,7 +59,7 @@ namespace FutnorteApp.UI
                     matchDateTime = dpMatchDate.SelectedDate.Value.Date + ((DateTime)cbMatchTime.SelectedItem).TimeOfDay;
                 }
 
-                if (round != null && homeTeam != null && awayTeam != null)
+                if (round != null && homeTeam != null && awayTeam != null && homeTeam != awayTeam)
                 {
                     var newMatch = new Match
                     {
