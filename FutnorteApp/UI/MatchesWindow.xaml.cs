@@ -2,10 +2,7 @@
 using FutnorteApp.DataAccess;
 using FutnorteApp.Domain;
 using System;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace FutnorteApp.UI
 {
@@ -23,8 +20,10 @@ namespace FutnorteApp.UI
             var roundRepository = new RoundRepository(futnorteContext);
             var teamRepository = new TeamRepository(futnorteContext);
             var fieldRepository = new FieldRepository(futnorteContext);
+            var resultRepository = new ResultRepository(futnorteContext);
             var matchService = new MatchService(matchRepository, roundRepository, teamRepository, fieldRepository);
-            _matchViewModel = new MatchViewModel(matchService);
+            var resultService = new ResultService(resultRepository, roundRepository, matchRepository, teamRepository);
+            _matchViewModel = new MatchViewModel(matchService, resultService);
             DataContext = _matchViewModel;
             _matchViewModel.SelectedMatch = null;
         }
@@ -69,12 +68,22 @@ namespace FutnorteApp.UI
                         AwayTeamId = awayTeam.TeamId,
                         FieldId = field?.FieldId
                     };
+                    // Validate APLAZADO match
                     if(newMatch.RoundId == 1)
                     {
                         newMatch.MatchDateTime = null;
                         newMatch.FieldId = null;
                     }
                     _matchViewModel.AddMatch(newMatch);
+
+                    // Add match result
+                    int resultId = newMatch.MatchId;
+                    var matchResult = new Result
+                    {
+                        ResultId = resultId,
+                        MatchId = newMatch.MatchId,
+                    };
+                    _matchViewModel.AddResult(matchResult);
                     MessageBox.Show("Registro Exitoso!", "Registrar", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -84,8 +93,14 @@ namespace FutnorteApp.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al registrar partido: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                string message = $"Error al registrar partido: {ex.Message}";
+                if (ex.InnerException != null)
+                {
+                    message += $"\nInner Exception: {ex.InnerException.Message}";
+                }
+                MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
 

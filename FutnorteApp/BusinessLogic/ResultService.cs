@@ -8,12 +8,16 @@ namespace FutnorteApp.BusinessLogic
     internal class ResultService
     {
         private readonly ResultRepository _resultRepository;
+        private readonly RoundRepository _roundRepository;
         private readonly MatchRepository _matchRepository;
+        private readonly TeamRepository _teamRepository;
 
-        public ResultService(ResultRepository resultRepository, MatchRepository matchRepository)
+        public ResultService(ResultRepository resultRepository, RoundRepository roundRepository, MatchRepository matchRepository, TeamRepository teamRepository)
         {
             _resultRepository = resultRepository;
+            _roundRepository = roundRepository;
             _matchRepository = matchRepository;
+            _teamRepository = teamRepository;
         }
 
         // Get all results asynchronously.
@@ -46,10 +50,22 @@ namespace FutnorteApp.BusinessLogic
             _resultRepository.DeleteResult(resultId);
         }
 
+        // Get all rounds asynchronously.
+        public async Task<List<Round>> GetAllRounds()
+        {
+            return await _roundRepository.GetAllRounds();
+        }
+
         // Get all matches asynchronously.
         public async Task<List<Match>> GetAllMatches()
         {
             return await _matchRepository.GetAllMatches();
+        }
+
+        // Get all teams asynchronously.
+        public async Task<List<Team>> GetAllTeams()
+        {
+            return await _teamRepository.GetAllTeams();
         }
     }
 }

@@ -10,40 +10,42 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="70"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                   FontWeight="Black" FontSize="20" Foreground="DodgerBlue">
+                   FontWeight="Black" FontSize="20" Foreground="OrangeRed">
             Resultados
         </TextBlock>
         <Border Grid.Row="1" BorderThickness="2" BorderBrush="OrangeRed">
-            <Grid Grid.Row="1" Height="50" VerticalAlignment="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition Width="160"/>
-                    <ColumnDefinition Width="180"/>
-                    <ColumnDefinition Width="180"/>
-                    <ColumnDefinition Width="180"/>
-                    <ColumnDefinition Width="130"/>
-                </Grid.ColumnDefinitions>
-                
-                <Label Grid.Column="0" Height="25" Width="100" 
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Top" Margin="10,0,0,0" 
-                       FontWeight="Bold">
-                    Fecha
-                </Label>
-                <DatePicker Name="dpResultDate" VerticalAlignment="Bottom" 
-                            Height="25" Width="100" 
-                            SelectedDate="{x:Static sys:DateTime.Now}"
-                            HorizontalAlignment="Left" Margin="10,0,0,0">
-                    <DatePicker.Language>
-                        <x:XmlLanguage>es-ES</x:XmlLanguage>
-                    </DatePicker.Language>
-                </DatePicker>
-            </Grid>
+            <DataGrid Language="es-CO" ItemsSource="{Binding ResultsViewSource.View}"
+                      AutoGenerateColumns="False" Width="Auto" CanUserAddRows="False"
+                      HeadersVisibility="Column" BorderThickness="1" SelectedItem="{Binding SelectedResult}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Fecha" Binding="{Binding Match.MatchDateTime, StringFormat=dd-MMMM-yyyy hh:mm tt}"
+                                        Width="180"/>
+                    <DataGridTextColumn Header="Jornada" Binding="{Binding Match.Round.RoundName}" 
+                                        Width="100"/>
+                    <DataGridTextColumn Header="Local" Binding="{Binding Match.HomeTeam.TeamName}" 
+                                        Width="*"/>
+                    <DataGridTemplateColumn Header="Goles" Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Name="txtHomeTeam"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Vistante" Binding="{Binding Match.AwayTeam.TeamName}" 
+                                        Width="*"/>
+                    <DataGridTemplateColumn Header="Goles" Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Name="txtAwayScore"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </Border>
     </Grid>
 </Window>

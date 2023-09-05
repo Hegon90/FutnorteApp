@@ -15,11 +15,13 @@ namespace FutnorteApp
     internal class MatchViewModel : INotifyPropertyChanged
     {
         private readonly MatchService _matchService;
+        private readonly ResultService _resultService;
         public List<DateTime> TimePicker { get; set; }
 
-        public MatchViewModel(MatchService matchService)
+        public MatchViewModel(MatchService matchService, ResultService resultService)
         {
             _matchService = matchService;
+            _resultService = resultService;
             _matches = new ObservableCollection<Match>();
             Matches = _matches;
             _teams = new ObservableCollection<Team>();
@@ -103,7 +105,10 @@ namespace FutnorteApp
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
+                int resultId = matchId;
+                _resultService.DeleteResult(resultId);
                 _matchService.DeleteMatch(matchId);
+                
                 // Find and remove the deleted match from the Matches collection
                 Match? match = Matches.FirstOrDefault(m => m.MatchId == matchId);
                 if (match != null)
@@ -187,6 +192,12 @@ namespace FutnorteApp
             {
                 MessageBox.Show($"Error al cargar las canchas: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        // Add match result
+        public void AddResult(Result result)
+        {
+            _resultService.AddResult(result);
         }
 
         // Get the values of the selected row in datagrids

@@ -24,6 +24,18 @@ namespace FutnorteApp.DataAccess
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
+
+        // Adding database configurations
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.Result)
+                .WithOne(r => r.Match)
+                .HasForeignKey<Result>(r => r.MatchId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }
 

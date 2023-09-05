@@ -16,6 +16,7 @@
             <MenuItem Header="Inicio"/>
             <MenuItem Header="Equipos" Click="TeamsWindow_Click"/>
             <MenuItem Header="Partidos" Click="MatchesWindow_Click"/>
+            <MenuItem Header="Resultados" Click="ResultsWindow_Click"/>
         </Menu>
     </Grid>
 </Window>

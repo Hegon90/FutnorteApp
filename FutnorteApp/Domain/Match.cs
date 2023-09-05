@@ -13,7 +13,7 @@ internal class Match
     public DateTime? MatchDateTime { get; set; }
 
     // Foreign keys.
-    public int? RoundId { get; set; }
+    public int RoundId { get; set; } = 0;
     [Required]
     public int HomeTeamId { get; set; } = 0;
     [Required]
@@ -34,10 +34,10 @@ internal class Match
     public Field? Field { get; set; }
 
     // Entity Framework parameterless constructor.
-    public Match() { }
+    public Match(){ }
 
     // Constructor to initialize the properties.
-    public Match(int matchId, DateTime? matchDateTime, int? roundId, int homeTeamId, int awayTeamId, int? fieldId)
+    public Match(int matchId, DateTime? matchDateTime, int roundId, int homeTeamId, int awayTeamId, int? fieldId)
     {
         MatchId = matchId;
         MatchDateTime = matchDateTime;
@@ -46,4 +46,6 @@ internal class Match
         AwayTeamId = awayTeamId;
         FieldId = fieldId;
     }
+
+    public Result? Result { get; set; }
 }

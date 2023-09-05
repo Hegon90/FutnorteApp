@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FutnorteApp.BusinessLogic;
+using FutnorteApp.DataAccess;
+using FutnorteApp.Domain;
+using FutnorteApp.ViewModel;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FutnorteApp.UI
 {
@@ -19,9 +12,29 @@ namespace FutnorteApp.UI
     /// </summary>
     public partial class ResultsWindow : Window
     {
+        private readonly ResultViewModel _resultViewModel;
         public ResultsWindow()
         {
             InitializeComponent();
+            var futnorteContext = new FutnorteContext();
+            var roundRepository = new RoundRepository(futnorteContext);
+            var matchRepository = new MatchRepository(futnorteContext);
+            var teamRepository = new TeamRepository(futnorteContext);
+            var resultRepository = new ResultRepository(futnorteContext);
+            var resultService = new ResultService(resultRepository, roundRepository, matchRepository, teamRepository);
+            _resultViewModel = new ResultViewModel(resultService);
+            DataContext = _resultViewModel;
+        }
+
+        protected override async void OnContentRendered(EventArgs e)
+        {
+            base.OnContentRendered(e);
+            await _resultViewModel.InitializeAsync();
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

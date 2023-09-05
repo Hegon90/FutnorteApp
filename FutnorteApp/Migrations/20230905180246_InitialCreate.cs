@@ -25,32 +25,12 @@ namespace FutnorteApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Records",
-                columns: table => new
-                {
-                    RecordId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GamesPlayed = table.Column<int>(type: "int", nullable: false),
-                    GoalsFor = table.Column<int>(type: "int", nullable: false),
-                    GoalsAgainst = table.Column<int>(type: "int", nullable: false),
-                    TeamWins = table.Column<int>(type: "int", nullable: false),
-                    TeamDraws = table.Column<int>(type: "int", nullable: false),
-                    TeamLosses = table.Column<int>(type: "int", nullable: false),
-                    TeamPoints = table.Column<int>(type: "int", nullable: false),
-                    TeamId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Records", x => x.RecordId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Rounds",
                 columns: table => new
                 {
                     RoundId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoundName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    RoundName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,7 +61,7 @@ namespace FutnorteApp.Migrations
                     MatchId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MatchDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RoundId = table.Column<int>(type: "int", nullable: true),
+                    RoundId = table.Column<int>(type: "int", nullable: false),
                     HomeTeamId = table.Column<int>(type: "int", nullable: false),
                     AwayTeamId = table.Column<int>(type: "int", nullable: false),
                     FieldId = table.Column<int>(type: "int", nullable: true)
@@ -98,7 +78,8 @@ namespace FutnorteApp.Migrations
                         name: "FK_Matches_Rounds_RoundId",
                         column: x => x.RoundId,
                         principalTable: "Rounds",
-                        principalColumn: "RoundId");
+                        principalColumn: "RoundId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Matches_Teams_AwayTeamId",
                         column: x => x.AwayTeamId,
@@ -114,15 +95,39 @@ namespace FutnorteApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Records",
+                columns: table => new
+                {
+                    RecordId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GamesPlayed = table.Column<int>(type: "int", nullable: false),
+                    GoalsFor = table.Column<int>(type: "int", nullable: false),
+                    GoalsAgainst = table.Column<int>(type: "int", nullable: false),
+                    TeamWins = table.Column<int>(type: "int", nullable: false),
+                    TeamDraws = table.Column<int>(type: "int", nullable: false),
+                    TeamLosses = table.Column<int>(type: "int", nullable: false),
+                    TeamPoints = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Records", x => x.RecordId);
+                    table.ForeignKey(
+                        name: "FK_Records_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "TeamId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Results",
                 columns: table => new
                 {
-                    ResultId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ResultDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HomeScore = table.Column<int>(type: "int", nullable: false),
-                    AwayScore = table.Column<int>(type: "int", nullable: false),
-                    RoundId = table.Column<int>(type: "int", nullable: false),
+                    ResultId = table.Column<int>(type: "int", nullable: false),
+                    ResultDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    HomeScore = table.Column<int>(type: "int", nullable: true),
+                    AwayScore = table.Column<int>(type: "int", nullable: true),
                     MatchId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -133,12 +138,6 @@ namespace FutnorteApp.Migrations
                         column: x => x.MatchId,
                         principalTable: "Matches",
                         principalColumn: "MatchId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Results_Rounds_RoundId",
-                        column: x => x.RoundId,
-                        principalTable: "Rounds",
-                        principalColumn: "RoundId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -163,14 +162,15 @@ namespace FutnorteApp.Migrations
                 column: "RoundId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Results_MatchId",
-                table: "Results",
-                column: "MatchId");
+                name: "IX_Records_TeamId",
+                table: "Records",
+                column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Results_RoundId",
+                name: "IX_Results_MatchId",
                 table: "Results",
-                column: "RoundId");
+                column: "MatchId",
+                unique: true);
         }
 
         /// <inheritdoc />

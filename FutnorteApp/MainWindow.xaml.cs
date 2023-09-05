@@ -24,6 +24,12 @@ namespace FutnorteApp
             var matchesWindow = new MatchesWindow();
             matchesWindow.Show();
         }
+
+        private void ResultsWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var resultsWindow = new ResultsWindow();
+            resultsWindow.Show();
+        }
     }
 }
 

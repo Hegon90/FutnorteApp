@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutnorteApp.Migrations
 {
     [DbContext(typeof(FutnorteContext))]
-    [Migration("20230830153112_InitialCreate")]
+    [Migration("20230905180246_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -77,6 +77,8 @@ namespace FutnorteApp.Migrations
 
                     b.HasKey("RecordId");
 
+                    b.HasIndex("TeamId");
+
                     b.ToTable("Records");
                 });
 
@@ -88,26 +90,22 @@ namespace FutnorteApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResultId"));
 
-                    b.Property<int>("AwayScore")
+                    b.Property<int?>("AwayScore")
                         .HasColumnType("int");
 
-                    b.Property<int>("HomeScore")
+                    b.Property<int?>("HomeScore")
                         .HasColumnType("int");
 
                     b.Property<int>("MatchId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ResultDate")
+                    b.Property<DateTime?>("ResultDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("RoundId")
-                        .HasColumnType("int");
 
                     b.HasKey("ResultId");
 
-                    b.HasIndex("MatchId");
-
-                    b.HasIndex("RoundId");
+                    b.HasIndex("MatchId")
+                        .IsUnique();
 
                     b.ToTable("Results");
                 });
@@ -181,7 +179,7 @@ namespace FutnorteApp.Migrations
                     b.Property<DateTime?>("MatchDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("RoundId")
+                    b.Property<int>("RoundId")
                         .HasColumnType("int");
 
                     b.HasKey("MatchId");
@@ -197,23 +195,26 @@ namespace FutnorteApp.Migrations
                     b.ToTable("Matches");
                 });
 
-            modelBuilder.Entity("FutnorteApp.Domain.Result", b =>
+            modelBuilder.Entity("FutnorteApp.Domain.Record", b =>
                 {
-                    b.HasOne("Match", "Match")
+                    b.HasOne("FutnorteApp.Domain.Team", "Team")
                         .WithMany()
-                        .HasForeignKey("MatchId")
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FutnorteApp.Domain.Round", "Round")
-                        .WithMany()
-                        .HasForeignKey("RoundId")
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("FutnorteApp.Domain.Result", b =>
+                {
+                    b.HasOne("Match", "Match")
+                        .WithOne("Result")
+                        .HasForeignKey("FutnorteApp.Domain.Result", "MatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Match");
-
-                    b.Navigation("Round");
                 });
 
             modelBuilder.Entity("Match", b =>
@@ -236,7 +237,9 @@ namespace FutnorteApp.Migrations
 
                     b.HasOne("FutnorteApp.Domain.Round", "Round")
                         .WithMany()
-                        .HasForeignKey("RoundId");
+                        .HasForeignKey("RoundId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AwayTeam");
 
@@ -245,6 +248,11 @@ namespace FutnorteApp.Migrations
                     b.Navigation("HomeTeam");
 
                     b.Navigation("Round");
+                });
+
+            modelBuilder.Entity("Match", b =>
+                {
+                    b.Navigation("Result");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Security.Policy;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FutnorteApp.Domain
 {
@@ -26,11 +26,15 @@ namespace FutnorteApp.Domain
         // Foreign keys.
         public int TeamId { get; set; } = 0;
 
+        // Navigation properties (Foreign keys as objects).
+        [ForeignKey("TeamId")]
+        public Team? Team { get; set; }
+
         // Entity Framework parameterless constructor.
         public Record() { }
 
         // Constructor to initialize the properties.
-        public Record(int recordId, int gamesPlayed, int goalsFor, int goalsAgainst, int teamwins, int teamDraws, int teamLosses, int teamPoints)
+        public Record(int recordId, int gamesPlayed, int goalsFor, int goalsAgainst, int teamwins, int teamDraws, int teamLosses, int teamPoints, int teamId)
         {
             RecordId = recordId;
             GamesPlayed = gamesPlayed;
@@ -40,6 +44,7 @@ namespace FutnorteApp.Domain
             TeamDraws = teamDraws;
             TeamLosses = teamLosses;
             TeamPoints = teamPoints;
+            TeamId = teamId;
         }
     }
 }
